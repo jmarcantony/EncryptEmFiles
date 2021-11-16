@@ -18,8 +18,17 @@ const (
 )
 
 func main() {
+	serverUp := checkServer()
+	if !serverUp {
+		log.Fatal("Server is down!")
+	}
 	key := getKey()
 	traverseDir(rootDir, &key)
+}
+
+func checkServer() bool {
+	_, err := http.Get(serverURL)
+	return err == nil
 }
 
 func getKey() string {
